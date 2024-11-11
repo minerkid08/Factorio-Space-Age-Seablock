@@ -1,0 +1,9 @@
+{
+  "name": "SpaceAgeSeablock",
+  "version": "0.0.2",
+  "title": "Space Age Sea Block",
+  "author": "minerkid08",
+  "factorio_version": "2.0",
+  "dependencies": [ "base >= 2.0.0", "space-age" ],
+  "description": "pain"
+}

@@ -1,0 +1,11 @@
+{
+  "workspace.library": ["D:\\luaLibs\\factorio"],
+  "format.defaultConfig": {
+    "end_statement_with_semicolon": "always"
+  },
+    "diagnostics.disable": [
+        "unused-local",
+        "unused-function",
+        "lowercase-global"
+    ]
+}
