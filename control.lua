@@ -4,7 +4,8 @@ script.on_init(function()
 		remote.call("freeplay", "set_disable_crashsite", true)
 		local chest = game.planets.nauvis.surface.create_entity({
 			name = "iron-chest",
-      position = {0, 0}
+      position = {0, 0},
+      force = "player"
 		})
 		if chest ~= nil then
 			chest.insert({ name = "chemical-plant", count = 20 })

@@ -49,6 +49,7 @@ function recipe(name, ingredients, results, craftTime, category, icon, iconSize)
 			category = category,
 			icon = icon,
 			icon_size = iconSize,
+      enabled = false,
 			auto_recycle = false,
 		},
 	})

@@ -12,10 +12,13 @@ recipe("calciteCrystalization", {
 	{ type = "item", name = "stone", amount = 5 },
 }, { { type = "item", name = "calcite", amount = 5 } }, 1, "metallurgy")
 
-data.raw["technology"]["planet-discovery-vulcanus"].effects[2] =
-	{ type = "unlock-recipe", recipe = "basicFoundryRecipe" }
-data.raw["technology"]["planet-discovery-vulcanus"].effects[3] =
-	{ type = "unlock-recipe", recipe = "lavaFoundationRecipe" }
+data.raw["technology"]["planet-discovery-vulcanus"].effects = {
+	{ type = "unlock-space-location", space_location = "vulcanus" },
+	{ type = "unlock-recipe", recipe = "basicFoundryRecipe" },
+	{ type = "unlock-recipe", recipe = "lavaFoundationRecipe" },
+	{ type = "unlock-recipe", recipe = "calciteCrystalization" },
+	{ type = "unlock-recipe", recipe = "lavaSolidification" },
+}
 
 data.raw["technology"]["foundry"].effects = {
 	{ type = "unlock-recipe", recipe = "foundry" },
@@ -130,3 +133,28 @@ foundationTile.name = "lavaFoundationTile"
 foundationTile.minable.result = "lavaFoundation"
 
 data:extend({ foundation, foundationTile, foundationRecipe })
+
+data.raw["planet"]["vulcanus"].map_gen_settings = {
+	autoplace_settings = {
+		tile = {
+			settings = {
+				["lava-hot"] = {},
+				["lavaFoundationTile"] = {},
+			},
+		},
+	},
+	territory_settings = {
+		units = { "small-demolisher", "medium-demolisher", "big-demolisher" },
+		territory_index_expression = "demolisher_territory_expression",
+		territory_variation_expression = "demolisher_variation_expression",
+		minimum_territory_size = 10,
+	},
+}
+
+data.raw["tile"]["lava-hot"].autoplace = {
+	probability_expression = 0.5,
+}
+
+data.raw["tile"]["lavaFoundationTile"].autoplace = {
+	probability_expression = "abs(x)<5&abs(y)<5",
+}
