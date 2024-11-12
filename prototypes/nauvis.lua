@@ -3,10 +3,19 @@ require("utils")
 local mineralizedWater = table.deepcopy(data.raw["fluid"]["water"])
 
 mineralizedWater.name = "mineralized-water"
+mineralizedWater.icon = imagePath("item/mineralized-water.png")
 data:extend({ mineralizedWater })
 
-item("filter-frame", 50)
-item("coal-filter", 50)
+local wasteWater = table.deepcopy(data.raw["fluid"]["water"])
+
+wasteWater.name = "waste-water"
+wasteWater.icon = imagePath("item/waste-water.png")
+data:extend({ wasteWater })
+
+item("filter-frame", 50, "item/filter-frame.png", 64)
+item("coal-filter", 50, "item/coal-filter.png", 64)
+item("ceramic-filter", 50, "item/ceramic-filter.png", 64)
+item("used-ceramic-filter", 50, "item/used-ceramic-filter.png", 64)
 
 recipe(
 	"coal-filter",
@@ -27,11 +36,11 @@ recipe(
 	{ { type = "item", name = "coal-filter", amount = 5 }, { type = "fluid", name = "water", amount = 50 } },
 	{
 		{ type = "item", name = "filter-frame", amount = 5 },
-		{ type = "fluid", name = "mineralized-water", amount = 50 },
+		{ type = "fluid", name = "mineralized-water", amount = 30 },
 	},
 	1,
 	"chemistry",
-	"__base__/graphics/icons/fluid/water.png",
+	imagePath("item/mineralized-water.png"),
 	64
 )
 
@@ -58,6 +67,45 @@ recipe(
 	"smelting"
 )
 
+recipe(
+	"ceramic-filtering",
+	{ { type = "item", name = "ceramic-filter", amount = 5 }, { type = "fluid", name = "water", amount = 50 } },
+	{
+		{ type = "item", name = "used-ceramic-filter", amount = 5 },
+		{ type = "fluid", name = "mineralized-water", amount = 40 },
+		{ type = "fluid", name = "waste-water", amount = 20 },
+	},
+	1,
+	"chemistry",
+	imagePath("item/mineralized-water.png"),
+	64
+)
+
+recipe(
+	"ceramic-filter",
+	{ { type = "item", name = "filter-frame", amount = 5 }, { type = "item", name = "stone", amount = 1 } },
+	{ { type = "item", name = "ceramic-filter", amount = 5 } },
+	0.5
+)
+
+recipe(
+	"ceramic-filter-cleaning",
+	{ { type = "item", name = "used-ceramic-filter", amount = 5 }, { type = "fluid", name = "water", amount = 1 } },
+	{ { type = "item", name = "ceramic-filter", amount = 5 }, { type = "fluid", name = "waste-water", amount = 20 } },
+	0.5,
+	"chemistry",
+	imagePath("item/ceramic-filter.png")
+)
+
+recipe(
+	"waste-water-recycling",
+	{ { type = "fluid", name = "waste-water", amount = 40 } },
+	{ { type = "fluid", name = "water", amount = 40 }, { type = "item", name = "sulfur", amount = 4 } },
+	1,
+	"chemistry",
+	imagePath("item/waste-water.png")
+)
+
 data.raw["recipe"]["coal-filter"].enabled = true
 data.raw["recipe"]["filter-frame"].enabled = true
 data.raw["recipe"]["water-filtering"].enabled = true
@@ -66,12 +114,20 @@ data.raw["recipe"]["basic-copper-smelting"].enabled = true
 data.raw["recipe"]["saphirite-crystalization-nauvis"].enabled = true
 data.raw["recipe"]["stiritite-crystalization-nauvis"].enabled = true
 
+data.raw["recipe"]["small-electric-pole"].enabled = true
+data.raw["recipe"]["copper-cable"].enabled = true
+
 data.raw["technology"]["oil-processing"].effects = {
-	{ type = "unlock-recipe", recipe = "oil-refinery" },
-	{ type = "unlock-recipe", recipe = "basic-oil-processing" },
 	{ type = "unlock-recipe", recipe = "solid-fuel-from-petroleum-gas" },
 	{ type = "unlock-recipe", recipe = "sulfurLiquidification" },
+	{ type = "unlock-recipe", recipe = "waste-water-recycling" },
 }
+
+data.raw["technology"]["oil-processing"].unit = data.raw["technology"]["oil-gathering"].unit
+data.raw["technology"]["oil-processing"].prerequisites = data.raw["technology"]["oil-gathering"].prerequisites
+table.insert(data.raw["technology"]["oil-processing"].prerequisites, "advanced-filtering")
+data.raw["technology"]["oil-processing"].research_trigger = nil
+data.raw.technology["oil-gathering"] = nil
 
 data:extend({
 	{
@@ -94,6 +150,55 @@ data:extend({
 		icon = "__base__/graphics/icons/chemical-plant.png",
 	},
 })
+
+data:extend({
+	{
+		type = "technology",
+		name = "advanced-filtering",
+		unit = {
+			count = 50,
+			ingredients = {
+				{ "automation-science-pack", 1 },
+				{ "logistic-science-pack", 1 },
+			},
+			time = 10,
+		},
+		prerequisites = {
+			"chemical-plant",
+			"logistic-science-pack",
+		},
+		effects = {
+			{ type = "unlock-recipe", recipe = "ceramic-filter" },
+			{ type = "unlock-recipe", recipe = "ceramic-filtering" },
+			{ type = "unlock-recipe", recipe = "ceramic-filter-cleaning" },
+		},
+		icon = imagePath("item/ceramic-filter.png"),
+	},
+})
+
+data.raw["technology"]["electronics"].effects = {
+	{
+		type = "unlock-recipe",
+		recipe = "electronic-circuit",
+	},
+	{
+		type = "unlock-recipe",
+		recipe = "lab",
+	},
+	{
+		type = "unlock-recipe",
+		recipe = "inserter",
+	},
+}
+
+for k, v in pairs(data.raw["technology"]["steam-power"].effects) do
+	if v.type == "unlock-recipe" then
+		data.raw["recipe"][v.recipe].enabled = true
+	end
+end
+data.raw["technology"]["steam-power"] = nil
+
+data.raw["technology"]["automation-science-pack"].prerequisites = { "electronics" }
 
 data.raw["planet"]["nauvis"].map_gen_settings = {
 	autoplace_settings = {
