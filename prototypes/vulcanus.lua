@@ -38,10 +38,10 @@ tech.effects = {
 	{ type = "unlock-recipe", recipe = "stiritite-crystalization-vulcanus" },
 	{ type = "unlock-recipe", recipe = "bobmonium-crystalization-vulcanus" },
 	{ type = "unlock-recipe", recipe = "rubyte-crystalization-vulcanus" },
-	{ type = "unlock-recipe", recipe = "saphirite-sorting" },
-	{ type = "unlock-recipe", recipe = "stiritite-sorting" },
-	{ type = "unlock-recipe", recipe = "bobmonium-sorting" },
-	{ type = "unlock-recipe", recipe = "rubyte-sorting" },
+	{ type = "unlock-recipe", recipe = "ore-1-crystalization-vulcanus" },
+	{ type = "unlock-recipe", recipe = "ore-2-crystalization-vulcanus" },
+	{ type = "unlock-recipe", recipe = "ore-1-sorting" },
+	{ type = "unlock-recipe", recipe = "ore-2-sorting" },
 	{ type = "unlock-recipe", recipe = "molten-iron" },
 	{ type = "unlock-recipe", recipe = "molten-copper" },
 	{ type = "unlock-recipe", recipe = "casting-iron" },
@@ -72,10 +72,10 @@ data:extend({ advancedCasting })
 local advancedSorting = table.deepcopy(data.raw["technology"]["coal-liquefaction"])
 advancedSorting.name = "advancedSorting"
 advancedSorting.effects = {
-	{ type = "unlock-recipe", recipe = "pure-iron-ore-sorting" },
-	{ type = "unlock-recipe", recipe = "pure-copper-ore-sorting" },
-	{ type = "unlock-recipe", recipe = "pure-tungsten-ore-sorting" },
-	{ type = "unlock-recipe", recipe = "pure-sulfur-sorting" },
+	{ type = "unlock-recipe", recipe = "pure-iron-ore-sorting-vulcanus" },
+	{ type = "unlock-recipe", recipe = "pure-copper-ore-sorting-vulcanus" },
+	{ type = "unlock-recipe", recipe = "pure-tungsten-ore-sorting-vulcanus" },
+	{ type = "unlock-recipe", recipe = "pure-sulfur-sorting-vulcanus" },
 }
 
 advancedSorting.icons = sortingImage("item/tungsten-ore.png")

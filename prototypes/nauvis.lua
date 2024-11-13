@@ -17,6 +17,16 @@ item("coal-filter", 50, "item/coal-filter.png", 64)
 item("ceramic-filter", 50, "item/ceramic-filter.png", 64)
 item("used-ceramic-filter", 50, "item/used-ceramic-filter.png", 64)
 
+item("catalist", 50, "item/catalist.png", 64)
+
+recipe(
+	"catalist",
+	{ { type = "fluid", name = "mineralized-water", amount = 20 } },
+	{ { type = "item", name = "catalist", amount = 1 } },
+	1,
+	"crafting-with-fluid"
+)
+
 recipe(
 	"coal-filter",
 	{ { type = "item", name = "filter-frame", amount = 5 }, { type = "item", name = "coal", amount = 1 } },
@@ -106,6 +116,56 @@ recipe(
 	imagePath("item/waste-water.png")
 )
 
+data:extend({
+	{
+		type = "technology",
+		name = "ore-sorting",
+		prerequisites = { "automation-2" },
+		unit = {
+			count = 100,
+			ingredients = {
+				{ "automation-science-pack", 1 },
+				{ "logistic-science-pack", 1 },
+			},
+			time = 1,
+		},
+		effects = {
+			{ type = "unlock-recipe", recipe = "saphirite-sorting" },
+			{ type = "unlock-recipe", recipe = "stiritite-sorting" },
+			{ type = "unlock-recipe", recipe = "bobmonium-sorting" },
+			{ type = "unlock-recipe", recipe = "rubyte-sorting" },
+			{ type = "unlock-recipe", recipe = "bobmonium-crystalization-nauvis" },
+			{ type = "unlock-recipe", recipe = "rubyte-crystalization-nauvis" },
+			{ type = "unlock-recipe", recipe = "iron-plate" },
+			{ type = "unlock-recipe", recipe = "copper-plate" },
+		},
+		icons = sortingImage("item/saphirite.png")
+	},
+	{
+		type = "technology",
+		name = "pure-ore-sorting",
+		prerequisites = {
+			"ore-sorting",
+			"chemical-science-pack",
+		},
+		unit = {
+			count = 100,
+			ingredients = {
+				{ "automation-science-pack", 1 },
+				{ "logistic-science-pack", 1 },
+				{ "chemical-science-pack", 1 },
+			},
+			time = 1,
+		},
+		effects = {
+			{ type = "unlock-recipe", recipe = "pure-iron-ore-sorting-nauvis" },
+			{ type = "unlock-recipe", recipe = "pure-copper-ore-sorting-nauvis" },
+			{ type = "unlock-recipe", recipe = "catalist" },
+		},
+		icons = sortingImage("item/iron-ore.png")
+	},
+})
+
 data.raw["recipe"]["coal-filter"].enabled = true
 data.raw["recipe"]["filter-frame"].enabled = true
 data.raw["recipe"]["water-filtering"].enabled = true
@@ -116,6 +176,9 @@ data.raw["recipe"]["stiritite-crystalization-nauvis"].enabled = true
 
 data.raw["recipe"]["small-electric-pole"].enabled = true
 data.raw["recipe"]["copper-cable"].enabled = true
+
+data.raw["recipe"]["iron-plate"].enabled = false
+data.raw["recipe"]["copper-plate"].enabled = false
 
 data.raw["technology"]["oil-processing"].effects = {
 	{ type = "unlock-recipe", recipe = "solid-fuel-from-petroleum-gas" },

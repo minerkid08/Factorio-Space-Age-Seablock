@@ -1,5 +1,12 @@
 require("utils")
 
+---@type table<Planet, string>
+local catalists = {
+  nauvis = "catalist",
+  vulcanus = "calcite"
+}
+
+
 ---@class Ore
 ---@field name string
 ---@field sortTo string[]
@@ -63,25 +70,24 @@ end
 
 ---@param ore string
 ---@param ingredients string[]
----@param planet Planet
-function pureSorting(ore, ingredients, planet)
-	local catalist = ""
-	if planet == "vulcanus" then
-		catalist = "calcite"
-	end
+---@param planets Planet[]
+function pureSorting(ore, ingredients, planets)
+	for k, planet in pairs(planets) do
+		local catalist = catalists[planet]
 
-	data:extend({
-		{
-			type = "recipe",
-			name = "pure-" .. ore .. "-sorting",
-			ingredients = {
-				{ type = "item", name = ingredients[1], amount = 3 },
-				{ type = "item", name = ingredients[2], amount = 3 },
-				{ type = "item", name = catalist, amount = 1 },
+		data:extend({
+			{
+				type = "recipe",
+				name = "pure-" .. ore .. "-sorting-" .. planet,
+				ingredients = {
+					{ type = "item", name = ingredients[1], amount = 3 },
+					{ type = "item", name = ingredients[2], amount = 3 },
+					{ type = "item", name = catalist, amount = 1 },
+				},
+				results = { { type = "item", name = ore, amount = 4 } },
+				icons = sortingImage("item/" .. ore .. ".png"),
+				enabled = false,
 			},
-			results = { { type = "item", name = ore, amount = 4 } },
-			icons = sortingImage("item/" .. ore .. ".png"),
-			enabled = false,
-		},
-	})
+		})
+	end
 end
