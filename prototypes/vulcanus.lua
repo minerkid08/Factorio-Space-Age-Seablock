@@ -1,16 +1,26 @@
 require("utils")
 
-recipe(
-	"lavaSolidification",
-	{ { type = "fluid", name = "lava", amount = 20 } },
-	{ { type = "item", name = "stone", amount = 5 } },
-	1,
-	"metallurgy"
-)
-recipe("calciteCrystalization", {
-	{ type = "fluid", name = "lava", amount = 20 },
-	{ type = "item", name = "stone", amount = 5 },
-}, { { type = "item", name = "calcite", amount = 5 } }, 1, "metallurgy")
+recipe({
+	name = "lavaSolidification",
+	ingredients = { { type = "fluid", name = "lava", amount = 20 } },
+	results = { { type = "item", name = "stone", amount = 5 } },
+	craftTime = 1,
+	category = "metallurgy",
+	subgroup = "crystalization-vulcanus",
+	order = "g",
+})
+recipe({
+	name = "calciteCrystalization",
+	ingredients = {
+		{ type = "fluid", name = "lava", amount = 20 },
+		{ type = "item", name = "stone", amount = 5 },
+	},
+	results = { { type = "item", name = "calcite", amount = 5 } },
+	craftTime = 1,
+	category = "metallurgy",
+	subgroup = "crystalization-vulcanus",
+	order = "h",
+})
 
 data.raw["technology"]["planet-discovery-vulcanus"].effects = {
 	{ type = "unlock-space-location", space_location = "vulcanus" },

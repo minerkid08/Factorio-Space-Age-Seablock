@@ -31,25 +31,35 @@ function sortingImage(name)
 	}
 end
 
----@param name string
----@param ingredients LuaIngredient[]
----@param results LuaIngredient[]
----@param craftTime uint
----@param category string?
----@param icon string?
----@param iconSize uint?
-function recipe(name, ingredients, results, craftTime, category, icon, iconSize)
+---@class Recipe
+---@field name string
+---@field ingredients LuaIngredient[]
+---@field results LuaIngredient[]
+---@field craftTime uint
+---@field icon string?
+---@field iconSize uint?
+---@field icons data.IconData[]?
+---@field subgroup string?
+---@field category string?
+---@field order string?
+---@field enabled boolean?
+
+---@param recipe Recipe
+function recipe(recipe)
 	data:extend({
 		{
 			type = "recipe",
-			name = name,
-			ingredients = ingredients,
-			results = results,
-			energy_required = craftTime,
-			category = category,
-			icon = icon,
-			icon_size = iconSize,
-      enabled = false,
+			name = recipe.name,
+			ingredients = recipe.ingredients,
+			results = recipe.results,
+			energy_required = recipe.craftTime,
+			category = recipe.category,
+			icon = imagePath(recipe.icon),
+			icon_size = recipe.iconSize,
+			icons = recipe.icons,
+      enabled = recipe.enabled or false,
+      subgroup = recipe.subgroup,
+      order = recipe.order,
 			auto_recycle = false,
 		},
 	})
@@ -80,7 +90,8 @@ end
 ---@param stackSize uint
 ---@param icon string?
 ---@param iconSize uint?
-function item(name, stackSize, icon, iconSize)
+---@param subgroup string?
+function item(name, stackSize, icon, iconSize, subgroup)
 	data:extend({
 		{
 			type = "item",
@@ -88,6 +99,7 @@ function item(name, stackSize, icon, iconSize)
 			stack_size = stackSize,
 			icon = imagePath(icon or "error.png"),
 			icon_size = iconSize or 48,
+      subgroup = subgroup
 		},
 	})
 end

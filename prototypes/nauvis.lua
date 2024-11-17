@@ -19,102 +19,138 @@ item("used-ceramic-filter", 50, "item/used-ceramic-filter.png", 64)
 
 item("catalist", 50, "item/catalist.png", 64)
 
-recipe(
-	"catalist",
-	{ { type = "fluid", name = "mineralized-water", amount = 20 } },
-	{ { type = "item", name = "catalist", amount = 1 } },
-	1,
-	"crafting-with-fluid"
-)
+recipe({
+	name = "catalist",
+	ingredients = { { type = "fluid", name = "mineralized-water", amount = 20 } },
+	results = { { type = "item", name = "catalist", amount = 1 } },
+	craftTime = 1,
+	category = "crafting-with-fluid",
+	subgroup = "intermediate-product",
+})
 
-recipe(
-	"coal-filter",
-	{ { type = "item", name = "filter-frame", amount = 5 }, { type = "item", name = "coal", amount = 1 } },
-	{ { type = "item", name = "coal-filter", amount = 5 } },
-	0.5
-)
+recipe({
+	name = "coal-filter",
+	ingredients = { { type = "item", name = "filter-frame", amount = 5 }, { type = "item", name = "coal", amount = 1 } },
+	results = { { type = "item", name = "coal-filter", amount = 5 } },
+	craftTime = 0.5,
+	enabled = true,
+	subgroup = "intermediate-product",
+})
 
-recipe(
-	"filter-frame",
-	{ { type = "item", name = "iron-plate", amount = 5 } },
-	{ { type = "item", name = "filter-frame", amount = 5 } },
-	0.5
-)
+recipe({
+	name = "filter-frame",
+	ingredients = { { type = "item", name = "iron-plate", amount = 5 } },
+	results = { { type = "item", name = "filter-frame", amount = 5 } },
+	craftTime = 0.5,
+	enabled = true,
+	subgroup = "intermediate-product",
+})
 
-recipe(
-	"water-filtering",
-	{ { type = "item", name = "coal-filter", amount = 5 }, { type = "fluid", name = "water", amount = 50 } },
-	{
-		{ type = "item", name = "filter-frame", amount = 5 },
+recipe({
+	name = "water-filtering",
+	ingredients = {
+		{ type = "item", name = "coal-filter", amount = 1},
+		{ type = "fluid", name = "water", amount = 50 },
+	},
+	results = {
+		{ type = "item", name = "filter-frame", amount = 1 },
 		{ type = "fluid", name = "mineralized-water", amount = 30 },
 	},
-	1,
-	"chemistry",
-	imagePath("item/mineralized-water.png"),
-	64
-)
+	craftTime = 1,
+	category = "chemistry",
+	icon = "item/mineralized-water.png",
+	iconSize = 64,
+	enabled = true,
+	subgroup = "intermediate-product",
+})
 
-recipe(
-	"stone-crystalization",
-	{ { type = "fluid", name = "mineralized-water", amount = 20 } },
-	{ { type = "item", name = "stone", amount = 4 } },
-	1,
-	"chemistry"
-)
+recipe({
+	name = "stone-crystalization",
+	ingredients = { { type = "fluid", name = "mineralized-water", amount = 20 } },
+	results = { { type = "item", name = "stone", amount = 4 } },
+	craftTime = 1,
+	category = "chemistry",
+	enabled = true,
+	subgroup = "crystalization-nauvis",
+  order = "e",
+})
 
-recipe(
-	"basic-iron-smelting",
-	{ { type = "item", name = "saphirite", amount = 4 } },
-	{ { type = "item", name = "iron-plate", amount = 3 } },
-	3.2,
-	"smelting"
-)
-recipe(
-	"basic-copper-smelting",
-	{ { type = "item", name = "stiritite", amount = 4 } },
-	{ { type = "item", name = "copper-plate", amount = 3 } },
-	3.2,
-	"smelting"
-)
+recipe({
+	name = "basic-iron-smelting",
+	ingredients = { { type = "item", name = "saphirite", amount = 4 } },
+	results = { { type = "item", name = "iron-plate", amount = 3 } },
+	craftTime = 3.2,
+	category = "smelting",
+	enabled = true,
+	subgroup = "intermediate-product",
+})
 
-recipe(
-	"ceramic-filtering",
-	{ { type = "item", name = "ceramic-filter", amount = 5 }, { type = "fluid", name = "water", amount = 50 } },
-	{
+recipe({
+	name = "basic-copper-smelting",
+	ingredients = { { type = "item", name = "stiritite", amount = 4 } },
+	results = { { type = "item", name = "copper-plate", amount = 3 } },
+	craftTime = 3.2,
+	category = "smelting",
+	enabled = true,
+	subgroup = "intermediate-product",
+})
+
+recipe({
+	name = "ceramic-filtering",
+	ingredients = {
+		{ type = "item", name = "ceramic-filter", amount = 5 },
+		{ type = "fluid", name = "water", amount = 50 },
+	},
+	results = {
 		{ type = "item", name = "used-ceramic-filter", amount = 5 },
 		{ type = "fluid", name = "mineralized-water", amount = 40 },
 		{ type = "fluid", name = "waste-water", amount = 20 },
 	},
-	1,
-	"chemistry",
-	imagePath("item/mineralized-water.png"),
-	64
-)
+	craftTime = 1,
+	category = "chemistry",
+	icon = "item/mineralized-water.png",
+	icon_size = 64,
+	subgroup = "intermediate-product",
+})
 
-recipe(
-	"ceramic-filter",
-	{ { type = "item", name = "filter-frame", amount = 5 }, { type = "item", name = "stone", amount = 1 } },
-	{ { type = "item", name = "ceramic-filter", amount = 5 } },
-	0.5
-)
+recipe({
+	name = "ceramic-filter",
+	ingredients = {
+		{ type = "item", name = "filter-frame", amount = 5 },
+		{ type = "item", name = "stone", amount = 1 },
+	},
+	results = { { type = "item", name = "ceramic-filter", amount = 5 } },
+	craftTime = 0.5,
+	subgroup = "intermediate-product",
+})
 
-recipe(
-	"ceramic-filter-cleaning",
-	{ { type = "item", name = "used-ceramic-filter", amount = 5 }, { type = "fluid", name = "water", amount = 1 } },
-	{ { type = "item", name = "ceramic-filter", amount = 5 }, { type = "fluid", name = "waste-water", amount = 20 } },
-	0.5,
-	"chemistry",
-	imagePath("item/ceramic-filter.png")
-)
+recipe({
+	name = "ceramic-filter-cleaning",
+	ingredients = {
+		{ type = "item", name = "used-ceramic-filter", amount = 5 },
+		{ type = "fluid", name = "water", amount = 1 },
+	},
+	results = {
+		{ type = "item", name = "ceramic-filter", amount = 5 },
+		{ type = "fluid", name = "waste-water", amount = 20 },
+	},
+	craftTime = 0.5,
+	category = "chemistry",
+	icon = "item/ceramic-filter.png",
+	iconSize = 64,
+	subgroup = "intermediate-product",
+})
 
-recipe(
-	"waste-water-recycling",
-	{ { type = "fluid", name = "waste-water", amount = 40 } },
-	{ { type = "fluid", name = "water", amount = 40 }, { type = "item", name = "sulfur", amount = 4 } },
-	1,
-	"chemistry",
-	imagePath("item/waste-water.png")
-)
+recipe({
+	name = "waste-water-recycling",
+	ingredients = { { type = "fluid", name = "waste-water", amount = 40 } },
+	results = { { type = "fluid", name = "water", amount = 40 }, { type = "item", name = "sulfur", amount = 4 } },
+	craftTime = 1,
+	category = "chemistry",
+	icon = "item/waste-water.png",
+	iconSize = 64,
+	subgroup = "intermediate-product",
+})
 
 data:extend({
 	{
@@ -139,7 +175,7 @@ data:extend({
 			{ type = "unlock-recipe", recipe = "iron-plate" },
 			{ type = "unlock-recipe", recipe = "copper-plate" },
 		},
-		icons = sortingImage("item/saphirite.png")
+		icons = sortingImage("item/saphirite.png"),
 	},
 	{
 		type = "technology",
@@ -162,7 +198,7 @@ data:extend({
 			{ type = "unlock-recipe", recipe = "pure-copper-ore-sorting-nauvis" },
 			{ type = "unlock-recipe", recipe = "catalist" },
 		},
-		icons = sortingImage("item/iron-ore.png")
+		icons = sortingImage("item/iron-ore.png"),
 	},
 })
 
