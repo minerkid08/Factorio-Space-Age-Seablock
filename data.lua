@@ -1,25 +1,37 @@
 require("prototypes.ores")
-require("prototypes.vulcanus")
+--require("prototypes.vulcanus")
 require("prototypes.nauvis")
 
+item("green-algae", 200, "item/green-algae.png", 64)
+item("cellulose", 200, "item/cellulose.png", 64)
+
 recipe({
-	name = "woodGrowing",
-	ingredients = { { type = "fluid", name = "water", amount = 50 } },
-	results = { { type = "item", name = "wood", amount = 5 } },
-	craftTime = 1,
+	name = "green-algae",
+	ingredients = { { type = "fluid", name = "water", amount = 20 } },
+	results = { { type = "item", name = "green-algae", amount = 10 } },
+	craftTime = 20,
 	category = "crafting-with-fluid",
-	enabled = true,
-	subgroup = "intermediate-product",
+  enabled = true,
 })
+
+recipe({
+	name = "cellulose",
+	ingredients = { { type = "item", name = "green-algae", amount = 5 } },
+	results = { { type = "item", name = "cellulose", amount = 2 } },
+	craftTime = 1,
+  enabled = true,
+})
+
 recipe({
 	name = "charcoal",
-	ingredients = { { type = "item", name = "wood", amount = 1 } },
+	ingredients = { { type = "item", name = "cellulose", amount = 5 } },
 	results = { { type = "item", name = "coal", amount = 1 } },
 	craftTime = 1,
 	category = "smelting",
 	enabled = true,
 	subgroup = "intermediate-product",
 })
+
 recipe({
 	name = "sulfurLiquidification",
 	ingredients = { { type = "item", name = "sulfur", amount = 2 } },
@@ -33,9 +45,6 @@ recipe({
 	iconSize = 64,
 	subgroup = "intermediate-product",
 })
-
-data.raw["recipe"]["woodGrowing"].enabled = true
-data.raw["recipe"]["charcoal"].enabled = true
 
 table.insert(data.raw["technology"]["electronics"].effects, { type = "unlock-recipe", recipe = "stone-board" })
 
@@ -69,12 +78,6 @@ data:extend({
 	},
 	{
 		type = "item-subgroup",
-		name = "crystalization-vulcanus",
-		group = "intermediate-products",
-		order = "fc",
-	},
-	{
-		type = "item-subgroup",
 		name = "ore-sorting",
 		group = "intermediate-products",
 		order = "fd",
@@ -84,12 +87,6 @@ data:extend({
 		name = "pureSorting-nauvis",
 		group = "intermediate-products",
 		order = "fe",
-	},
-	{
-		type = "item-subgroup",
-		name = "pureSorting-vulcanus",
-		group = "intermediate-products",
-		order = "ff",
 	},
 	{
 		type = "item-subgroup",
@@ -136,7 +133,7 @@ recipe({
 	name = "advanced-circuit-board",
 	ingredients = {
 		{ type = "item", name = "plastic-board", amount = 1 },
-		{ type = "item", name = "copper-cable", amount = 2 },
+		{ type = "item", name = "tin-cable", amount = 2 },
 	},
 	results = {
 		{ type = "item", name = "advanced-circuit-board", amount = 1 },
@@ -149,7 +146,7 @@ recipe({
 recipe({
 	name = "transistor",
 	ingredients = {
-		{ type = "item", name = "plastic-bar", amount = 1 },
+		{ type = "item", name = "silicon-wafer", amount = 1 },
 		{ type = "item", name = "copper-cable", amount = 1 },
 		{ type = "item", name = "copper-plate", amount = 1 },
 	},
@@ -168,7 +165,7 @@ recipe({
 	ingredients = {
 		{ type = "item", name = "advanced-circuit-board", amount = 1 },
 		{ type = "item", name = "transistor", amount = 3 },
-		{ type = "item", name = "copper-cable", amount = 2 },
+		{ type = "item", name = "tin-cable", amount = 2 },
 	},
 	results = {
 		{ type = "item", name = "advanced-circuit", amount = 1 },
@@ -243,13 +240,15 @@ data.raw["technology"]["advanced-circuit"].effects = {
 	{ type = "unlock-recipe", recipe = "plastic-board" },
 }
 
+data.raw["technology"]["advanced-circuit"].prerequisites = { "silicon-processing", "plastics", "tin-processing"}
+
 data.raw["technology"]["processing-unit"].effects = {
 	{ type = "unlock-recipe", recipe = "processing-unit" },
 	{ type = "unlock-recipe", recipe = "integrated-circuit" },
 	{ type = "unlock-recipe", recipe = "processing-unit-board" },
 }
 
-data.raw["technology"]["landfill"].prerequisites = {"automation-science-pack"}
+data.raw["technology"]["landfill"].prerequisites = { "automation-science-pack" }
 data.raw["technology"]["landfill"].unit.ingredients = { { "automation-science-pack", 1 } }
 data.raw["technology"]["landfill"].unit.count = 10
 

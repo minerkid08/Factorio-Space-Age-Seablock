@@ -49,7 +49,7 @@ recipe({
 recipe({
 	name = "water-filtering",
 	ingredients = {
-		{ type = "item", name = "coal-filter", amount = 1},
+		{ type = "item", name = "coal-filter", amount = 1 },
 		{ type = "fluid", name = "water", amount = 50 },
 	},
 	results = {
@@ -72,7 +72,7 @@ recipe({
 	category = "chemistry",
 	enabled = true,
 	subgroup = "crystalization-nauvis",
-  order = "e",
+	order = "e",
 })
 
 recipe({
@@ -216,16 +216,24 @@ data.raw["recipe"]["copper-cable"].enabled = true
 data.raw["recipe"]["iron-plate"].enabled = false
 data.raw["recipe"]["copper-plate"].enabled = false
 
-data.raw["technology"]["oil-processing"].effects = {
-	{ type = "unlock-recipe", recipe = "solid-fuel-from-petroleum-gas" },
-	{ type = "unlock-recipe", recipe = "sulfurLiquidification" },
+data.raw["technology"]["oil-processing"] = nil
+
+data.raw["technology"]["plastics"].prerequisites = { "fluid-handling" }
+data.raw["technology"]["plastics"].effects =
+	{ { type = "unlock-recipe", recipe = "plastic-bar" }, { type = "unlock-recipe", recipe = "wood-liquification" } }
+
+data.raw["technology"]["sulfur-processing"].unit = data.raw["technology"]["oil-gathering"].unit
+data.raw["technology"]["sulfur-processing"].prerequisites = data.raw["technology"]["oil-gathering"].prerequisites
+data.raw["technology"]["sulfur-processing"].research_trigger = nil
+
+data.raw["technology"]["flammables"].prerequisites = { "advanced-oil-processing" }
+data.raw["technology"]["rocket-fuel"].prerequisites = { "flammables" }
+
+data.raw["technology"]["sulfur-processing"].effects = {
 	{ type = "unlock-recipe", recipe = "waste-water-recycling" },
+	{ type = "unlock-recipe", recipe = "sulfuric-acid" },
 }
 
-data.raw["technology"]["oil-processing"].unit = data.raw["technology"]["oil-gathering"].unit
-data.raw["technology"]["oil-processing"].prerequisites = data.raw["technology"]["oil-gathering"].prerequisites
-table.insert(data.raw["technology"]["oil-processing"].prerequisites, "advanced-filtering")
-data.raw["technology"]["oil-processing"].research_trigger = nil
 data.raw.technology["oil-gathering"] = nil
 
 data:extend({
@@ -289,6 +297,95 @@ data.raw["technology"]["electronics"].effects = {
 		recipe = "inserter",
 	},
 }
+
+item("blue-algae", 200, "item/blue-algae.png", 64)
+
+recipe({
+	name = "blue-algae",
+	ingredients = { { type = "fluid", name = "waste-water", amount = 50 } },
+	results = { { type = "item", name = "blue-algae", amount = 20 } },
+	craftTime = 20,
+	enabled = true,
+	category = "crafting-with-fluid",
+})
+
+recipe({
+	name = "crude-oil",
+	ingredients = {
+		{ type = "item", name = "blue-algae", amount = 5 },
+		{ type = "fluid", name = "steam", amount = 50 },
+	},
+	results = {
+		{ type = "fluid", name = "crude-oil", amount = 30 },
+		{
+			type = "fluid",
+			name = "waste-water",
+			amount = 20,
+		},
+	},
+	craftTime = 1,
+	enabled = true,
+	category = "chemistry",
+	icon2 = "__base__/graphics/icons/fluid/crude-oil.png",
+})
+
+local fuelOil = table.deepcopy(data.raw["fluid"]["water"])
+
+fuelOil.name = "fuel-oil"
+fuelOil.icon = imagePath("item/fuel-oil.png")
+data:extend({ fuelOil })
+
+data.raw["recipe"]["advanced-oil-processing"].results = {
+	{ type = "fluid", name = "heavy-oil", amount = 25 },
+	{ type = "fluid", name = "petroleum-gas", amount = 45 },
+	{ type = "fluid", name = "fuel-oil", amount = 55 },
+}
+
+data.raw["recipe"]["rocket-fuel"].ingredients[2].name = "fuel-oil"
+data.raw["recipe"]["solid-fuel-from-heavy-oil"] = nil
+data.raw["recipe"]["solid-fuel-from-light-oil"].ingredients[1].name = "fuel-oil"
+data.raw["recipe"]["solid-fuel-from-light-oil"].name = "solid-fuel-from-fuel-oil"
+data.raw["recipe"]["solid-fuel-from-fuel-oil"] = data.raw["recipe"]["solid-fuel-from-light-oil"]
+data.raw["recipe"]["solid-fuel-from-light-oil"] = nil
+data.raw["recipe"]["solid-fuel-from-petroleum-gas"] = nil
+
+local advancedOil2 = table.deepcopy(data.raw.recipe["advanced-oil-processing"])
+advancedOil2.name = "advanced-petroleum-processing"
+advancedOil2.results = {
+	{ type = "fluid", name = "heavy-oil", amount = 45 },
+	{ type = "fluid", name = "petroleum-gas", amount = 25 },
+	{ type = "fluid", name = "fuel-oil", amount = 25 },
+}
+data:extend({advancedOil2})
+
+data.raw["technology"]["advanced-oil-processing"].effects = {
+	{
+		type = "unlock-recipe",
+		recipe = "advanced-oil-processing",
+	},
+  {
+    type = "unlock-recipe",
+    recipe = "advanced-petroleum-processing"
+  },
+	{
+		type = "unlock-recipe",
+		recipe = "oil-refinery",
+	},
+	{
+		type = "unlock-recipe",
+		recipe = "solid-fuel-from-fuel-oil",
+	},
+}
+
+recipe({
+	name = "wood-liquification",
+	ingredients = { { type = "item", name = "wood", amount = 5 } },
+	results = { { type = "fluid", name = "petroleum-gas", amount = 50 } },
+	craftTime = 1,
+	category = "chemistry",
+})
+
+data.raw["research-achievement"]["eco-unfriendly"].technology = "advanced-oil-processing"
 
 for k, v in pairs(data.raw["technology"]["steam-power"].effects) do
 	if v.type == "unlock-recipe" then

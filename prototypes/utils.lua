@@ -37,6 +37,7 @@ end
 ---@field results LuaIngredient[]
 ---@field craftTime uint
 ---@field icon string?
+---@field icon2 string?
 ---@field iconSize uint?
 ---@field icons data.IconData[]?
 ---@field subgroup string?
@@ -54,7 +55,7 @@ function recipe(recipe)
 			results = recipe.results,
 			energy_required = recipe.craftTime,
 			category = recipe.category,
-			icon = imagePath(recipe.icon),
+			icon = imagePath(recipe.icon) or recipe.icon2,
 			icon_size = recipe.iconSize,
 			icons = recipe.icons,
       enabled = recipe.enabled or false,
