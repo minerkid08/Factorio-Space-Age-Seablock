@@ -9,12 +9,15 @@ script.on_init(function()
 		})
 		if chest ~= nil then
 			chest.insert({ name = "chemical-plant", count = 20 })
-			chest.insert({ name = "assembling-machine-2", count = 20 })
+			chest.insert({ name = "electronic-circuit", count = 100 })
 			chest.insert({ name = "iron-plate", count = 100 })
 			chest.insert({ name = "copper-plate", count = 100 })
 			chest.insert({ name = "stone", count = 100 })
 			chest.insert({ name = "wood", count = 50})
 			chest.insert({ name = "landfill", count = 500})
+			chest.insert({ name = "solar-panel", count = 30})
+			chest.insert({ name = "accumulator", count = 30})
+			chest.insert({ name = "small-electric-pole", count = 30})
 		end
 	end
 end)

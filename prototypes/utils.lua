@@ -58,30 +58,9 @@ function recipe(recipe)
 			icon = imagePath(recipe.icon) or recipe.icon2,
 			icon_size = recipe.iconSize,
 			icons = recipe.icons,
-      enabled = recipe.enabled or false,
-      subgroup = recipe.subgroup,
-      order = recipe.order,
-			auto_recycle = false,
-		},
-	})
-end
-
----@param name string
----@param ingredients LuaIngredient[]
----@param results LuaIngredient[]
----@param craftTime uint
----@param category string?
----@param icons data.IconData[]
-function recipeIcon(name, ingredients, results, craftTime, category, icons)
-	data:extend({
-		{
-			type = "recipe",
-			name = name,
-			ingredients = ingredients,
-			results = results,
-			energy_required = craftTime,
-			category = category,
-			icons = icons,
+			enabled = recipe.enabled or false,
+			subgroup = recipe.subgroup,
+			order = recipe.order,
 			auto_recycle = false,
 		},
 	})
@@ -92,7 +71,8 @@ end
 ---@param icon string?
 ---@param iconSize uint?
 ---@param subgroup string?
-function item(name, stackSize, icon, iconSize, subgroup)
+---@param order string?
+function item(name, stackSize, icon, iconSize, subgroup, order)
 	data:extend({
 		{
 			type = "item",
@@ -100,7 +80,56 @@ function item(name, stackSize, icon, iconSize, subgroup)
 			stack_size = stackSize,
 			icon = imagePath(icon or "error.png"),
 			icon_size = iconSize or 48,
-      subgroup = subgroup
+			subgroup = subgroup,
+      order = order
+		},
+	})
+end
+
+---@class AssemblingMachine
+---@field name string
+---@field icon string
+---@field iconSize uint
+---@field categories string[]
+---@field speed uint
+---@field box Vector[2]
+---@field mineResult string?
+---@field fluidBoxes data.FluidBox[]?
+---@field fluidBoxesWithNoFluidRecipe boolean?
+---@field energySource data.EnergySource?
+---@field energyUsage string?
+
+---@param machine AssemblingMachine
+function assemblingMachine(machine)
+	data:extend({
+		{
+			type = "assembling-machine",
+			name = machine.name,
+			graphics_set = {
+				animation = {
+					filename = imagePath(machine.icon),
+					width = machine.iconSize,
+					height = machine.iconSize,
+				},
+			},
+			crafting_categories = machine.categories,
+			crafting_speed = machine.speed,
+			selection_box = {
+				left_top = { machine.box[1][1], machine.box[1][2] },
+				right_bottom = { machine.box[2][1], machine.box[2][2] },
+			},
+			collision_box = {
+				left_top = { machine.box[1][1] + 0.2, machine.box[1][2] + 0.2 },
+				right_bottom = { machine.box[2][1] - 0.2, machine.box[2][2] - 0.2 },
+			},
+			fluid_boxes = machine.fluidBoxes,
+			fluid_boxes_off_when_no_fluid_recipe = machine.fluidBoxesWithNoFluidRecipe,
+			minable = {
+				mining_time = 1,
+				result = machine.mineResult,
+			},
+			energy_source = machine.energySource or { type = "electric", usage_priority = "secondary-input" },
+			energy_usage = "100kW",
 		},
 	})
 end

@@ -10,8 +10,8 @@ recipe({
 	ingredients = { { type = "fluid", name = "water", amount = 20 } },
 	results = { { type = "item", name = "green-algae", amount = 10 } },
 	craftTime = 20,
-	category = "crafting-with-fluid",
-  enabled = true,
+	category = "algae-growing",
+	subgroup = "algae",
 })
 
 recipe({
@@ -19,7 +19,7 @@ recipe({
 	ingredients = { { type = "item", name = "green-algae", amount = 5 } },
 	results = { { type = "item", name = "cellulose", amount = 2 } },
 	craftTime = 1,
-  enabled = true,
+	subgroup = "algae",
 })
 
 recipe({
@@ -28,8 +28,30 @@ recipe({
 	results = { { type = "item", name = "coal", amount = 1 } },
 	craftTime = 1,
 	category = "smelting",
-	enabled = true,
 	subgroup = "intermediate-product",
+})
+
+data:extend({
+	{
+		type = "technology",
+		name = "algae-processing",
+		icon = imagePath("item/green-algae.png"),
+		icon_size = 64,
+		prerequisites = { "automation-science-pack" },
+		unit = {
+			count = 25,
+			ingredients = {
+				{ "automation-science-pack", 1 },
+			},
+			time = 10,
+		},
+		effects = {
+			{ type = "unlock-recipe", recipe = "algae-farm" },
+			{ type = "unlock-recipe", recipe = "green-algae" },
+			{ type = "unlock-recipe", recipe = "cellulose" },
+			{ type = "unlock-recipe", recipe = "charcoal" },
+		},
+	},
 })
 
 recipe({
@@ -61,6 +83,7 @@ data.raw.recipe["electronic-circuit"] = {
 	category = "crafting",
 	energy_required = 0.5,
 	subgroup = "intermediate-product",
+	enabled = false,
 }
 
 data:extend({
@@ -240,7 +263,7 @@ data.raw["technology"]["advanced-circuit"].effects = {
 	{ type = "unlock-recipe", recipe = "plastic-board" },
 }
 
-data.raw["technology"]["advanced-circuit"].prerequisites = { "silicon-processing", "plastics", "tin-processing"}
+data.raw["technology"]["advanced-circuit"].prerequisites = { "silicon-processing", "plastics", "tin-processing" }
 
 data.raw["technology"]["processing-unit"].effects = {
 	{ type = "unlock-recipe", recipe = "processing-unit" },

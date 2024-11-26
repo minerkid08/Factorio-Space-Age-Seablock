@@ -71,6 +71,7 @@ function generateOre(ore)
 		energy_required = 1,
 		order = ore.order,
 		subgroup = "ore-sorting",
+		category = "ore-sorting",
 	}
 	data:extend({ item, recipe })
 	data:extend(crystalizationRecipes)
@@ -99,6 +100,7 @@ function pureSorting(ore, ingredients, planets, order)
 				order = order,
 				energy_required = 1,
 				enabled = false,
+				category = "ore-sorting",
 			},
 		})
 	end
