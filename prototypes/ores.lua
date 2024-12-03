@@ -1,34 +1,55 @@
 require("oreUtils")
 
+itemSubgroup("crystalization-nauvis", "intermediate-products", "fb")
+itemSubgroup("crystalization-vulcanus", "intermediate-products", "fc")
+itemSubgroup("ore-sorting", "intermediate-products", "fd")
+itemSubgroup("pure-sorting-nauvis", "intermediate-products", "fe")
+itemSubgroup("pure-sorting-vulcanus", "intermediate-products", "ff")
+itemSubgroup("ore", "intermediate-products", "fg")
+
+data:extend({
+	{
+		type = "item-subgroup",
+		name = "circuits",
+		group = "intermediate-products",
+		order = "fh",
+	},
+})
+
 generateOre({
 	name = "saphirite",
 	sortTo = { "iron-ore", "copper-ore" },
-	planets = { "nauvis" },
+	planets = { "nauvis", "vulcanus" },
 	order = "a",
 })
 generateOre({
 	name = "stiritite",
 	sortTo = { "copper-ore", "iron-ore" },
-	planets = { "nauvis" },
+	planets = { "nauvis", "vulcanus" },
 	order = "b",
 })
 generateOre({
 	name = "bobmonium",
 	sortTo = { "iron-ore", "tin-ore" },
-	planets = { "nauvis" },
+	planets = { "nauvis", "vulcanus" },
 	order = "c",
 })
-generateOre({ name = "rubyte", sortTo = { "copper-ore", "silicon-ore" }, planets = { "nauvis" }, order = "d" })
---generateOre({ name = "ore-1", sortTo = { "iron-ore", "tungsten-ore" }, planets = { "vulcanus" }, order = "e" })
---generateOre({ name = "ore-2", sortTo = { "copper-ore", "sulfur" }, planets = { "vulcanus" }, order = "f" })
+generateOre({
+	name = "rubyte",
+	sortTo = { "copper-ore", "silicon-ore" },
+	planets = { "nauvis", "vulcanus" },
+	order = "d",
+})
+generateOre({ name = "ore-1", sortTo = { "iron-ore", "tungsten-ore" }, planets = { "vulcanus" }, order = "e" })
+generateOre({ name = "ore-2", sortTo = { "copper-ore", "sulfur" }, planets = { "vulcanus" }, order = "f" })
 
-pureSorting("iron-ore", { "saphirite", "bobmonium" }, { "nauvis" }, "a")
-pureSorting("copper-ore", { "stiritite", "rubyte" }, { "nauvis" }, "b")
-pureSorting("silicon-ore", { "bobmonium", "rubyte" }, { "nauvis" }, "c")
-pureSorting("tin-ore", { "stiritite", "bobmonium" }, { "nauvis" }, "d")
+pureSorting("iron-ore", { "saphirite", "bobmonium" }, { "nauvis", "vulcanus" }, "a")
+pureSorting("copper-ore", { "stiritite", "rubyte" }, { "nauvis", "vulcanus" }, "b")
+pureSorting("silicon-ore", { "bobmonium", "rubyte" }, { "nauvis", "vulcanus" }, "c")
+pureSorting("tin-ore", { "stiritite", "bobmonium" }, { "nauvis", "vulcanus" }, "d")
 
---pureSorting("tungsten-ore", { "ore-1", "stiritite" }, { "vulcanus" }, "c")
---pureSorting("sulfur", { "ore-2", "bobmonium" }, { "vulcanus" }, "d")
+pureSorting("tungsten-ore", { "ore-1", "stiritite" }, { "vulcanus" }, "e")
+pureSorting("sulfur", { "ore-2", "bobmonium" }, { "vulcanus" }, "f")
 
 data.raw["item"]["iron-ore"].subgroup = "iron"
 data.raw["item"]["iron-ore"].order = "a"
@@ -45,6 +66,7 @@ data.raw["item"]["copper-plate"].subgroup = "copper"
 data.raw["item"]["copper-plate"].order = "b"
 data.raw["item"]["copper-cable"].subgroup = "copper"
 data.raw["item"]["copper-cable"].order = "c"
+
 -- tin
 
 item("tin-ore", 100, "item/tin-ore.png", 64, "tin", "a")
@@ -57,17 +79,20 @@ recipe({
 	results = { { type = "item", name = "tin-plate", amount = 1 } },
 	craftTime = 3.2,
 	category = "smelting",
-  subgroup = "tin",
-  order = "d"
+	subgroup = "tin",
+	order = "d",
 })
 
 recipe({
 	name = "tin-cable",
-	ingredients = { { type = "item", name = "tin-plate", amount = 1 }, {type = "item", name = "copper-cable", amount = 5} },
+	ingredients = {
+		{ type = "item", name = "tin-plate", amount = 1 },
+		{ type = "item", name = "copper-cable", amount = 5 },
+	},
 	results = { { type = "item", name = "tin-cable", amount = 5 } },
 	craftTime = 3.2,
-  subgroup = "tin",
-  order = "e"
+	subgroup = "tin",
+	order = "e",
 })
 
 data:extend({
@@ -98,30 +123,30 @@ item("mono-silicon", 100, "item/mono-silicon.png", 64, "silicon", "b")
 item("silicon-wafer", 100, "item/silicon-wafer.png", 64, "silicon", "c")
 
 data:extend({
-  {
-    type = "item-subgroup",
-    name = "iron",
-    group = "intermediate-products",
-    order = "ca"
-  },
-  {
-    type = "item-subgroup",
-    name = "copper",
-    group = "intermediate-products",
-    order = "cb"
-  },
-  {
-    type = "item-subgroup",
-    name = "tin",
-    group = "intermediate-products",
-    order = "cc"
-  },
-  {
-    type = "item-subgroup",
-    name = "silicon",
-    group = "intermediate-products",
-    order = "cd"
-  }
+	{
+		type = "item-subgroup",
+		name = "iron",
+		group = "intermediate-products",
+		order = "ca",
+	},
+	{
+		type = "item-subgroup",
+		name = "copper",
+		group = "intermediate-products",
+		order = "cb",
+	},
+	{
+		type = "item-subgroup",
+		name = "tin",
+		group = "intermediate-products",
+		order = "cc",
+	},
+	{
+		type = "item-subgroup",
+		name = "silicon",
+		group = "intermediate-products",
+		order = "cd",
+	},
 })
 
 recipe({
@@ -130,8 +155,8 @@ recipe({
 	results = { { type = "item", name = "mono-silicon", amount = 1 } },
 	craftTime = 3.2,
 	category = "smelting",
-  subgroup = "silicon",
-  order = "b"
+	subgroup = "silicon",
+	order = "b",
 })
 
 recipe({
@@ -139,8 +164,8 @@ recipe({
 	ingredients = { { type = "item", name = "mono-silicon", amount = 1 } },
 	results = { { type = "item", name = "silicon-wafer", amount = 5 } },
 	craftTime = 0.5,
-  subgroup = "silicon",
-  order = "c"
+	subgroup = "silicon",
+	order = "c",
 })
 
 data:extend({

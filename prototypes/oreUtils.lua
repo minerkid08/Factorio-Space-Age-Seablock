@@ -96,7 +96,7 @@ function pureSorting(ore, ingredients, planets, order)
 				},
 				results = { { type = "item", name = ore, amount = 4 } },
 				icons = sortingImage("item/" .. ore .. ".png"),
-				subgroup = "pureSorting-" .. planet,
+				subgroup = "pure-sorting-" .. planet,
 				order = order,
 				energy_required = 1,
 				enabled = false,

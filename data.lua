@@ -1,6 +1,7 @@
 require("prototypes.ores")
---require("prototypes.vulcanus")
+require("prototypes.vulcanus")
 require("prototypes.nauvis")
+require("prototypes.metallurgy")
 
 item("green-algae", 200, "item/green-algae.png", 64)
 item("cellulose", 200, "item/cellulose.png", 64)
@@ -25,7 +26,7 @@ recipe({
 recipe({
 	name = "charcoal",
 	ingredients = { { type = "item", name = "cellulose", amount = 5 } },
-	results = { { type = "item", name = "coal", amount = 1 } },
+	results = { { type = "item", name = "coal", amount = 4 } },
 	craftTime = 1,
 	category = "smelting",
 	subgroup = "intermediate-product",
@@ -86,38 +87,6 @@ data.raw.recipe["electronic-circuit"] = {
 	enabled = false,
 }
 
-data:extend({
-	{
-		type = "item-subgroup",
-		name = "circuits",
-		group = "intermediate-products",
-		order = "fh",
-	},
-	{
-		type = "item-subgroup",
-		name = "crystalization-nauvis",
-		group = "intermediate-products",
-		order = "fb",
-	},
-	{
-		type = "item-subgroup",
-		name = "ore-sorting",
-		group = "intermediate-products",
-		order = "fd",
-	},
-	{
-		type = "item-subgroup",
-		name = "pureSorting-nauvis",
-		group = "intermediate-products",
-		order = "fe",
-	},
-	{
-		type = "item-subgroup",
-		name = "ore",
-		group = "intermediate-products",
-		order = "fg",
-	},
-})
 
 item("stone-board", 50, "item/stone-board.png", 64, "circuits")
 

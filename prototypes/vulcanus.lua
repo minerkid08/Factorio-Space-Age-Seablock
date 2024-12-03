@@ -7,8 +7,9 @@ recipe({
 	craftTime = 1,
 	category = "metallurgy",
 	subgroup = "crystalization-vulcanus",
-	order = "g",
+  order = "g"
 })
+
 recipe({
 	name = "calciteCrystalization",
 	ingredients = {
@@ -19,12 +20,11 @@ recipe({
 	craftTime = 1,
 	category = "metallurgy",
 	subgroup = "crystalization-vulcanus",
-	order = "h",
+  order = "h"
 })
 
 data.raw["technology"]["planet-discovery-vulcanus"].effects = {
 	{ type = "unlock-space-location", space_location = "vulcanus" },
-	{ type = "unlock-recipe", recipe = "basicFoundryRecipe" },
 	{ type = "unlock-recipe", recipe = "lavaFoundationRecipe" },
 	{ type = "unlock-recipe", recipe = "calciteCrystalization" },
 	{ type = "unlock-recipe", recipe = "lavaSolidification" },
@@ -84,6 +84,8 @@ advancedSorting.name = "advancedSorting"
 advancedSorting.effects = {
 	{ type = "unlock-recipe", recipe = "pure-iron-ore-sorting-vulcanus" },
 	{ type = "unlock-recipe", recipe = "pure-copper-ore-sorting-vulcanus" },
+	{ type = "unlock-recipe", recipe = "pure-tin-ore-sorting-vulcanus" },
+	{ type = "unlock-recipe", recipe = "pure-silicon-ore-sorting-vulcanus" },
 	{ type = "unlock-recipe", recipe = "pure-tungsten-ore-sorting-vulcanus" },
 	{ type = "unlock-recipe", recipe = "pure-sulfur-sorting-vulcanus" },
 }
@@ -96,33 +98,6 @@ data:extend({ advancedSorting })
 data.raw["technology"]["tungsten-carbide"].prerequisites = { "oreProcessing" }
 data.raw["technology"]["tungsten-carbide"].research_trigger =
 	{ type = "craft-item", item = "tungsten-ore", amount = 20 }
-
-local foundryItem = table.deepcopy(data.raw["item"]["foundry"])
-
-foundryItem.name = "basicFoundry"
-foundryItem.place_result = "basicFoundry"
-
-local foundryRecipe = table.deepcopy(data.raw["recipe"]["foundry"])
-
-foundryRecipe.enabled = false
-foundryRecipe.name = "basicFoundryRecipe"
-foundryRecipe.results[1].name = "basicFoundry"
-
-foundryRecipe.ingredients = {
-	{ type = "item", name = "steel-plate", amount = 25 },
-	{ type = "item", name = "electronic-circuit", amount = 20 },
-	{ type = "item", name = "concrete", amount = 20 },
-}
-
-local foundry = table.deepcopy(data.raw["assembling-machine"]["foundry"])
-
-foundry.name = "basicFoundry"
-foundry.crafting_speed = 1
-foundry.effect_receiver.base_effect.productivity = 0
-foundry.crafting_categories = { "metallurgy" }
-foundry.minable.result = "basicFoundry"
-
-data:extend({ foundryItem, foundry, foundryRecipe })
 
 local foundation = table.deepcopy(data.raw["item"]["foundation"])
 
